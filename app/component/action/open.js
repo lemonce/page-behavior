@@ -14,7 +14,7 @@ function highlight($document, path) {
 		lalalala = !lalalala;
 	}, 500);
 
-	element.scrollIntoViewIfNeeded(true);
+	element.scrollIntoView();
 }
 
 function setValue($document) {

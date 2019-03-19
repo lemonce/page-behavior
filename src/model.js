@@ -44,3 +44,5 @@ exports.Session = sequelize.define('session', {
 	ua: STRING,
 	lastVisitTime: DATE
 });
+
+sequelize.sync();

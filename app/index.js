@@ -1,27 +1,23 @@
-import app from 'lc-apm';
-import Behavior from './component/Behavior.vue';
+import Vue from 'vue';
+import App from './component/App';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import en_US from './i18n/en_US.yaml';
 import zh_CN from './i18n/zh_CN.yaml';
 
-app.router.addRoutes([
-	{
-		path: '/behavior',
-		component: Behavior
-	}
-]);
 
-app.store.dispatch('menu/addGroup', {
-	name: 'page.menu.group.name',
-	itemList: [
-		{
-			label: 'page.behavior',
-			path: '/behavior'
-		}
-	]
+import VueI18n from 'vue-i18n';
+
+Vue.use(VueI18n);
+
+App.i18n = new VueI18n({
+	locale: 'zh-cn',
+	messages: {
+		'zh-cn': zh_CN,
+		'en-us': en_US
+	}
 });
 
-app.i18n.mergeLocaleMessage('en', en_US);
-app.i18n.mergeLocaleMessage('zh', zh_CN);
+const app = new Vue(App);
 
-app.i18n.locale = 'zh';
+app.$mount('#app');

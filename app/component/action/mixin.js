@@ -4,8 +4,6 @@ import Timeline from './utils/Timeline.vue';
 import Datetime from './utils/Datetime.vue';
 import { openWindow } from './open';
 
-const userFlagURL = 'api/page/behavior/userFlag/';
-
 export default {
 	props: [ 'behavior', 'session' ],
 	data() {
@@ -20,7 +18,7 @@ export default {
 	},
 	methods: {
 		openSnapshot() {
-			const url = `${userFlagURL}${this.session}/snapshot/${this.behavior.time}`;
+			const url = `/api/session/${this.session}/snapshot/${this.behavior.time}/root`;
 
 			openWindow(url, {
 				path: this.behavior.data.path

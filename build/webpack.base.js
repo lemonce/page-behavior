@@ -39,9 +39,8 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.yml$/,
-				use: ['yml-loader'],
-				include: /langs/
+				test: /\.yaml$/,
+				use: ['json-loader', 'yaml-loader']
 			}
 		]
 	},

@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const path = require('path');
 const fsp = require('fs').promises;
+const fse = require('fs-extra');
 const _ = require('lodash');
 const { Session, Action } = require('./model');
 const utils = require('./utils');
@@ -26,27 +27,22 @@ router.delete('/session/:code', ctx => {
 });
 
 router.get('/session/:code', async ctx => {
-	const { dataValues: session } = await Session.findOne({
+	ctx.body = await Session.findOne({
 		where: {
-			code: ctx.params.sessionCode
+			code: ctx.params.code
 		}
 	});
-
-	ctx.body = session;
 });
 
 router.delete('/session', async ctx => {
+	Action.truncate();
+	fse.emptyDir(path.resolve('data'), );
 	Session.truncate();
 	ctx.status = 200;
 });
 
 router.get('/session', async ctx => {
-	const result = {};
-	const sessionList = await Session.findAll();
-
-	sessionList.forEach(session => result[session.code] = session);
-
-	ctx.body = result;
+	ctx.body = await Session.findAll();
 });
 
 router.post('/session/:code/action', async ctx => {
@@ -55,7 +51,7 @@ router.post('/session/:code/action', async ctx => {
 	const { code } = ctx.params;
 	const { type, data } = ctx.request.body;
 	const { snapshot } = data;
-	const time = new Date(Number(snapshot.time));
+	const time = new Date(snapshot.time);
 
 	const session = await Session.findOrCreate({
 		where: { code, ip, ua },
@@ -65,7 +61,7 @@ router.post('/session/:code/action', async ctx => {
 		}
 	});
 
-	session.update({ lastVisitTime: time });
+	session[0].update({ lastVisitTime: time });
 
 	await Action.create({
 		code, time, type,
@@ -80,10 +76,10 @@ router.post('/session/:code/action', async ctx => {
 		return fsp.mkdir(sessionDataPath, { recursive: true });
 	});
 
-	const recordDir = path.resolve(sessionDataPath, time);
+	const recordDir = path.resolve(sessionDataPath, String(snapshot.time));
 	
 	await fsp.mkdir(recordDir);
-	await utils.createRcord(data.snapshot, recordDir, 'root');
+	await utils.createRecord(data.snapshot, recordDir, 'root');
 
 	ctx.status = 200;
 });
@@ -110,6 +106,6 @@ router.get('/session/:code/action', async ctx => {
 router.get('/session/:code/snapshot/:time/:pathname', async ctx => {
 	const { code, time, pathname } = ctx.params;
 
-	ctx.type = 'html/text';
+	ctx.type = 'text/html';
 	ctx.body = await fsp.readFile(path.resolve('data', code, time, pathname));
 });
