@@ -36,7 +36,7 @@ router.get('/session/:code', async ctx => {
 
 router.delete('/session', async ctx => {
 	Action.truncate();
-	fse.emptyDir(path.resolve('data'), );
+	fse.emptyDir(path.resolve('data'));
 	Session.truncate();
 	ctx.status = 200;
 });

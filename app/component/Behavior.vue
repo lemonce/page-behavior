@@ -27,7 +27,7 @@
               type="button"
               :title="$t('session.select')"
               class="btn btn-default dropdown-toggle"
-              @click="isSessionPoolShow = !isSessionPoolShow"
+              @click="getSessionPool()"
             >
               <span class="caret"></span>
             </button>
@@ -161,7 +161,6 @@ function ActionDataFactory(raw) {
 			action.interval = action.time - raw[index - 1].time;
 		}
 	});
-	console.log(data);
 	
 	return data;
 }
@@ -203,7 +202,8 @@ export default {
 	methods: {
 		async getSessionPool() {
 			const { data: sessionList } = await axios.get('/api/session');
-			this.sessionPool = sessionList;
+      this.sessionPool = sessionList;
+      this.isSessionPoolShow = !this.isSessionPoolShow
 		},
 		getUserInfo(session) {
 			return axios.get(`/api/session/${session}`).then(data => {
