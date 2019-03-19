@@ -1,0 +1,101 @@
+page:
+  menu:
+    group:
+      name: 'Page'
+
+  behavior: 'Behavior Demo'
+
+session:
+  delete: 'Delele Current Session'
+  generalCode: 'General Code'
+  remove: 'Remove All'
+  info: 'User Info'
+  behavior: 'User Behavior'
+  select: 'Select Session'
+  noData: 'There is no data for the time being because you do not
+    choose the session you want to see'
+
+info:
+  ip: 'IP'
+  terminal: 'Terminal'
+  lastVisitTime: 'L.V.T'
+  session: 'Session'
+  ua: 'UA'
+
+behavior:
+  time: 'Time'
+  line: 'Line'
+  action: 'Action'
+  interval: 'Interval'
+
+action:
+  element: 'Element'
+  path: 'Path'
+  text: 'Text'
+  href: 'Href'
+  referrer: 'Referrer'
+  title: 'Title'
+  position: 'Position'
+  label: 'Label'
+  value: 'Value'
+
+  type:
+    click: 'Click'
+    doubleClick: 'DLClick'
+    rightClick: 'RClick'
+    enter: 'Enter'
+    check: 'Check'
+    uncheck: 'UnCheck'
+    select: 'Select'
+    input: 'Input'
+    
+element:
+  a: 'A Hyperlink'
+  b: 'Defines bold text'
+  body: 'Blank'
+  button: 'A Button'
+  code: 'Computer Code Text'
+  form: 'A Form'
+  hr: 'A Separation line'
+  h1: 'A First Class Title'
+  h2: 'A Two level headline'
+  h3: 'A Three level headline'
+  h4: 'A Four level headline'
+  h5: 'A Five level headline'
+  h6: 'A Six level headline'
+  img: 'An Image'
+  input: 'An Input Box'
+  label: 'A Label'
+  li: 'A series of sequences'
+  nav: 'A Navigation'
+  ol: 'An Ordered List'
+  optgroup: 'An Option Group'
+  option: 'An Option of Drop-down Menu'
+  p: 'A Paragraph'
+  pre: 'Computer Source Code'
+  select: 'A Drop-down Menu'
+  small: 'Trumpet Text Font'
+  table: 'A Table'
+  tbody: 'The Body Of The Table'
+  td: 'A Standard Cell'
+  textarea: 'A Text Field'
+  tfoot: 'The Footer Of The Table'
+  th: 'A Header Cell'
+  thead: 'The Head Of The Table'
+  title: 'A Title'
+  tr: 'A Line Of Table'
+  ul: 'An Unordered List'
+  video: 'A Video'
+  
+input:
+  type:
+    button: 'A Button'
+    checkbox: 'A Checkbox'
+    file: 'A Browse Button'
+    hidden: 'A Hidden Input Field'
+    image: 'An Image Submit Button'
+    password: 'A Password Field'
+    radio: 'A Single Radio Box'
+    reset: 'A Reset Button'
+    submit: 'A Submit Button'
+    text: 'A Text Box'
