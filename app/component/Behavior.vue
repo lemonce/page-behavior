@@ -143,7 +143,7 @@
 <script>
 import axios from 'axios';
 import dateFormat from 'dateformat';
-import actionParser from './parser/python';
+import actionParser from '../parser/python';
 
 import Enter from './action/Enter.vue';
 import Click from './action/Click.vue';
@@ -258,9 +258,29 @@ export default {
 				this.getAction();
 			})
 		},
+		text(data) {
+			const elementName = data.element.localName;
+			const elementType = data.element.type;
+
+			if (elementName === 'div' ||
+			elementName === 'span') {
+				return '空白区域';
+			}
+			
+			if (elementName === 'input') {
+				return this.$t(`input.type.${elementType}`);
+			}
+			
+			return this.$t(`element.${elementName}`);
+		},
 		showLog() {
 			if (!this.isLogShow) {
-				this.codeText = PYTHON_HEAD + this.behaviorList.reduce((acc, cur) => acc + actionParser('driver', cur) + 'time.sleep(interval)\r\n' + '\r\n', '');
+				this.codeText = PYTHON_HEAD + this.behaviorList.reduce((acc, cur) => {
+					if (cur.type === 'enter') return acc;
+					const comment = `#${this.$t(cur.label)} ` + (cur.type === 'input' ? `${cur.data.value}` : `${cur.data.text || this.text(cur.data)}`);
+					const code = actionParser('driver', cur) + 'time.sleep(interval)\r\n';
+					return [acc, comment, code].join('\r\n');
+				}, '');
 			}
 
 			this.isLogShow = !this.isLogShow;
