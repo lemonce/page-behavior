@@ -6,8 +6,8 @@ const rightClick = (identifier, value) => `.context_click(${identifier}).perform
 const doubleClick = (identifier, value) => `${identifier}.double_click()`;
 const input = (identifier, value) => `${identifier}.clear()` + EOL + `${identifier}.send_keys('${value}')`;
 const select = (identifier, value) => {};
-const check = (identifier, value) => `${identifier}.send_keys(Keys.SPACE)`;
-const uncheck = (identifier, value) => `${identifier}.send_keys(Keys.SPACE)`;
+const check = (identifier, value) => `if ${identifier}.is_selected() == False: ${identifier}.send_keys(Keys.SPACE)`;
+const uncheck = (identifier, value) => `if ${identifier}.is_selected(): ${identifier}.send_keys(Keys.SPACE)`;
 
 const browser = { click, rightClick, doubleClick, input, select, check, uncheck };
 const actionChains = (driver, type) => type === 'rightClick' ? `ActionChains(${driver})` : '';
