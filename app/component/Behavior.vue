@@ -175,7 +175,16 @@ const PYTHON_HEAD = 'from selenium import webdriver\r\n' +
 										'from selenium.webdriver.common.action_chains import ActionChains\r\n' +
 										'import time\r\n' +
 										'interval = 0.5\r\n' +
-										'driver = webdriver.Chrome()\r\n\r\n'
+										'driver = webdriver.Chrome()\r\n\r\n';
+
+function noCode(type) {
+	const skip = {
+		enter: true,
+		select: true
+	};
+
+	return skip[type];
+}
 
 export default {
 	components: {
@@ -259,6 +268,10 @@ export default {
 			})
 		},
 		text(data) {
+			if (!data.element) {
+				return data.href;
+			}
+
 			const elementName = data.element.localName;
 			const elementType = data.element.type;
 
@@ -276,8 +289,8 @@ export default {
 		showLog() {
 			if (!this.isLogShow) {
 				this.codeText = PYTHON_HEAD + this.behaviorList.reduce((acc, cur) => {
-					if (cur.type === 'enter') return acc;
 					const comment = `#${this.$t(cur.label)} ` + (cur.type === 'input' ? `${cur.data.value}` : `${cur.data.text || this.text(cur.data)}`);
+					if (noCode(cur.type)) return [acc, comment].join('\r\n');
 					const code = actionParser('driver', cur) + 'time.sleep(interval)\r\n';
 					return [acc, comment, code].join('\r\n');
 				}, '');
